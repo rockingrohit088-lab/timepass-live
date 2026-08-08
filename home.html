@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Pass - Premium OTT Streaming Platform</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0c0a12;
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 1. प्रोफेशनल OTT हेडर */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(12, 10, 18, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo-group { display: flex; align-items: center; gap: 35px; }
+        .logo {
+            font-size: 2.4rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff0055, #7a00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: -1.5px;
+            cursor: pointer;
+        }
+        .nav-links { display: flex; list-style: none; gap: 25px; }
+        .nav-links a { color: #a5a2b5; text-decoration: none; font-size: 0.95rem; font-weight: 600; transition: 0.3s; }
+        .nav-links a.active, .nav-links a:hover { color: #ff0055; }
+
+        /* लाइव सर्च बार इंजन */
+        .search-container { position: relative; width: 320px; }
+        .search-bar {
+            width: 100%;
+            padding: 10px 18px;
+            padding-right: 40px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.3s;
+        }
+        .search-bar:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #ff0055;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.2);
+        }
+
+        /* 2. हॉटस्टार स्टाइल बिग स्पॉटलाइट बैनर */
+        .hero-slider {
+            position: relative;
+            height: 50vh;
+            background: linear-gradient(to top, #0c0a12 8%, rgba(12, 10, 18, 0.2) 60%, rgba(12, 10, 18, 0.7)), 
+                        linear-gradient(135deg, #1d1235, #08050e);
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+        .hero-content { max-width: 650px; }
+        .ott-tag {
+            background: linear-gradient(45deg, #ff0055, #7a00ff);
+            color: white;
+            padding: 5px 12px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .hero-content h2 { font-size: 3.5rem; font-weight: 900; line-height: 1.1; margin-bottom: 15px; letter-spacing: -1px; }
+        .hero-content p { color: #c3c0d4; font-size: 1.05rem; line-height: 1.5; }
+
+        /* 3. लाइव कैटेगरी फ़िल्टर चिप्स */
+        .filter-wrapper { padding: 0 5% 25px 5%; display: flex; gap: 12px; overflow-x: auto; }
+        .filter-chip {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #c3c0d4;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+        .filter-chip:hover, .filter-chip.active {
+            background: linear-gradient(45deg, #ff0055, #7a00ff);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* 4. मल्टी-रो शोकेस लेआउट */
+        .content-section { padding: 10px 5% 40px 5%; }
+        .row-container { margin-bottom: 40px; }
+        .section-header { font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .indicator { width: 4px; height: 22px; background: #ff0055; border-radius: 2px; }
+        
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 25px;
+        }
+        .movie-card {
+            background: #151221;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .movie-card:hover {
+            transform: scale(1.04);
+            border-color: rgba(255, 0, 85, 0.4);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* बिना इंटरनेट के टूटने से सुरक्षित पोस्टर सिस्टम */
+        .poster-container {
+            width: 100%;
+            aspect-ratio: 2/3;
+            background: linear-gradient(135deg, #22183a, #0c0914);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .poster-icon { font-size: 3.5rem; margin-bottom: 5px; }
+        .poster-txt { font-size: 0.75rem; color: #625f78; font-weight: 700; text-transform: uppercase; }
+
+        /* कमाई/मोनेटाइजेशन के लिए अर्निंग टैग्स */
+        .earning-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 10px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            border-radius: 4px;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+        .tag-free { background: #00ff66; color: #000; }
+        .tag-premium { background: #ffbc00; color: #000; }
+        
+        .card-body { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .movie-name { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .movie-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; }
+        .movie-genre { color: #9c99b0; background: rgba(255, 255, 255, 0.05); padding: 3px 8px; border-radius: 5px; }
+        .movie-rating { color: #ffb800; font-weight: bold; }
+        
+        .play-action-btn {
+            display: block;
+            text-align: center;
+            background: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            transition: 0.2s;
+        }
+        .movie-card:hover .play-action-btn {
+            background: linear-gradient(45deg, #ff0055, #7a00ff);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. प्रोफेशनल नेविगेशन बार -->
+    <nav class="navbar">
+        <div class="logo-group">
+            <div class="logo">Time Pass</div>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">Movies</a></li>
+                <li><a href="#">Live TV</a></li>
+                <li><a href="#">Premium</a></li>
+            </ul>
+        </div>
+        
+        <!-- रीयल-टाइम लाइव सर्च इंजन इनपुट -->
+        <div class="search-container">
+            <input type="text" id="movieSearch" class="search-bar" placeholder="Search title, genre..." onkeyup="filterMoviesEngine()">
+        </div>
+    </nav>
+
+    <!-- 2. हॉटस्टार स्टाइल लाइव स्पॉटलाइट बैनर -->
+    <div class="hero-slider">
+        <div class="hero-content">
+            <span class="ott-tag">✦ Dynamic Live Stream Framework</span>
+            <h2>Premium Platform Experience</h2>
+            <p>A completely integrated, cross-platform distributed media architecture built for real-world high concurrent audience delivery.</p>
+        </div>
+    </div>
+
+    <!-- 3. लाइव कैटेगरी फ़िल्टर चिप्स -->
+    <div class="filter-wrapper">
+        <div class="filter-chip active" onclick="filterGenreEngine('All')">All Content</div>
+        <div class="filter-chip" onclick="filterGenreEngine('Action')">🎬 Action Area</div>
+        <div class="filter-chip" onclick="filterGenreEngine('Animation')">🤖 Animation Hub</div>
+        <div class="filter-chip" onclick="filterGenreEngine('Comedy')">🍿 Comedy Central</div>
+    </div>
+
+    <!-- 4. मल्टी-रो मूवी गैलरी शोकेस -->
+    <main class="content-section" id="masterContainer">
+        
+        <!-- रो 1: ट्रेंडिंग रिकमेंडेड मूवीज -->
+        <div class="row-container section-row-block">
+            <div class="section-header"><span class="indicator"></span> Recommended Stream Nodes</div>
+            <div class="movie-grid">
+                {% for movie in all_movies %}
+                <div class="movie-card" data-title="{{ movie.title | lower }}" data-genre="{{ movie.genre }}">
+                    <!-- अर्निंग मोनेटाइजेशन टैग लॉजिक -->
+                    {% if movie.is_premium %}
+                    <span class="earning-tag tag-premium">Premium</span>
+                    {% else %}
+                    <span class="earning-tag tag-free">Free</span>
+                    {% endif %}
+                    
+                    <div class="poster-container">
+                        <div class="poster-icon">🎬</div>
+                        <div class="poster-txt">OTT Asset</div>
+                    </div>
+                    <div class="card-body">
+                        <!-- कार्ड बॉडी का बचा हुआ हिस्सा -->
+                        <div class="movie-name">{{ movie.title }}</div>
+                        <div class="movie-meta">
+                            <span class="movie-genre">{{ movie.genre }}</span>
+                            <span class="movie-rating">★ {{ movie.rating }}</span>
+                        </div>
+                    </div>
+                    <a href="{% url 'play_movie' movie.id %}" class="play-action-btn">Stream Now</a>
+                </div>
+            </div>
+            {% empty %}
+            <div style="color: #534f6e; font-size: 0.9rem; padding: 5px 0;">No exclusive Action content added yet.</div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    </main>
+
+    <!-- लाइव सर्च और चिप फ़िल्टर का जावास्क्रिप्ट इंजन -->
+    <script>
+        function filterMoviesEngine() {
+            let input = document.getElementById('movieSearch').value.toLowerCase();
+            let cards = document.getElementsByClassName('movie-card');
+            
+            for (let card of cards) {
+                let title = card.getAttribute('data-title');
+                if (title.includes(input)) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            }
+        }
+
+        function filterGenreEngine(genre) {
+            let chips = document.getElementsByClassName('filter-chip');
+            for(let chip of chips) { chip.classList.remove('active'); }
+            if (window.event) { window.event.currentTarget.classList.add('active'); }
+
+            let cards = document.getElementsByClassName('movie-card');
+            for (let card of cards) {
+                let cardGenre = card.getAttribute('data-genre');
+                if (genre === 'All' || cardGenre.includes(genre)) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
